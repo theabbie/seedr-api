@@ -1,0 +1,25 @@
+{
+  "name": "seedr",
+  "version": "1.0.0",
+  "description": "Unofficial API wrapper for seedr.cc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"working\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theabbie/seedr-api.git"
+  },
+  "keywords": [
+    "seedr"
+  ],
+  "author": "theabbie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theabbie/seedr-api/issues"
+  },
+  "homepage": "https://github.com/theabbie/seedr-api#readme",
+  "dependencies": {
+    "axios": "^0.21.0"
+  }
+}
