@@ -1,6 +1,6 @@
 {
   "name": "seedr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unofficial API wrapper for seedr.cc",
   "main": "index.js",
   "scripts": {
