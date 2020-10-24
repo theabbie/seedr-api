@@ -1,6 +1,6 @@
 {
   "name": "seedr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Unofficial API wrapper for seedr.cc",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/theabbie/seedr-api#readme",
   "dependencies": {
-    "axios": "^0.21.0"
+    "axios": "^0.21.0",
+    "form-data": "^3.0.0"
   }
 }
