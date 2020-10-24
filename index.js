@@ -21,6 +21,7 @@ module.exports = class Seedr {
 	});
 	this.token = token.data["access_token"];
 	this.rft = token.data["refresh_token"];
+	return this.token;
   }
 
   async getDeviceCode() {
@@ -38,9 +39,11 @@ module.exports = class Seedr {
   }
 
   async addMagnet(magnet) {
-  	data.append('access_token', this.token);
-	data.append('func', 'add_magnet');
+  	var data = new FormData();
+	data.append('access_token', this.token);
+	data.append('func', 'add_torrent');
 	data.append('torrent_magnet', magnet);
+
 	var res = await axios({
   		method: 'post',
   		url: 'https://www.seedr.cc/oauth_test/resource.php',
