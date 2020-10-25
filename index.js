@@ -49,12 +49,12 @@ module.exports = class Seedr {
 	data.append('torrent_magnet', magnet);
 
 	var res = await axios({
-  		method: 'post',
-  		url: 'https://www.seedr.cc/oauth_test/resource.php',
-  		headers: data.getHeaders(),
-  		data : data
+  	  method: 'post',
+  	  url: 'https://www.seedr.cc/oauth_test/resource.php',
+          headers: data.getHeaders(),
+  	  data : data
 	});
-	return res;
+	return res.data;
   }
 
   async getVideos() {
@@ -63,13 +63,47 @@ module.exports = class Seedr {
     var data = await axios("https://www.seedr.cc/api/folder?access_token="+this.token);
 
     for (var folder of data.data.folders) {
-      res.push((await axios("https://www.seedr.cc/api/folder/"+folder.id+"?access_token="+this.token)).data.files.filter(x=>x["play_video"]).map(x=>{return {id: x["folder_file_id"],name: x.name}}))
+      res.push((await axios("https://www.seedr.cc/api/folder/"+folder.id+"?access_token="+this.token)).data.files.filter(x=>x["play_video"]).map(x=>{return {fid: folder.id, id: x["folder_file_id"], name: x.name}}));
     }
 
     return res;
   }
 
-  
+  async getFile(id) {
+    var data = new FormData();                                    data.append('access_token', this.token);                      data.append('func', 'fetch_file');                            data.append('folder_file_id', id);
+
+     var res = await axios({
+         method: 'post',
+         url: 'https://www.seedr.cc/oauth_test/resource.php',
+         headers: data.getHeaders(),
+         data : data
+     });
+     return res.data;
+  }
+
+  async deleteFolder(id) {
+    var data = new FormData();
+    data.append('access_token', thid.token);
+    data.append('func', 'delete');
+    data.append('delete_arr', JSON.stringify([{type: 'folder',id: id}]));
+
+    var res = await axios({
+  	method: 'post',
+  	url: 'https://www.seedr.cc/oauth_test/resource.php',
+  	headers: data.getHeaders(),
+  	data : data
+    });
+    return res.data;
+  }
+
+  async deleteFile(id) {                                          var data = new FormData();
+    data.append('access_token', thid.token);                      data.append('func', 'delete');                                data.append('delete_arr', JSON.stringify([{type: 'file',id: id}]));
+
+    var res = await axios({
+        method: 'post',
+        url: 'https://www.seedr.cc/oauth_test/resource.php',          headers: data.getHeaders(),
+        data : data                                               });                                                           return res.data;
+  }
 }
 
 
