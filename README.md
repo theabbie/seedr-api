@@ -12,7 +12,7 @@ var Seedr = require("seedr");
 var seedr = new Seedr();
 await seedr.login("email@example.com","password");
 await seedr.addMagnet("magnet_link");
-// Starts doenloading, wait till that happens
+// Starts downloading, wait till that happens
 var contents = await seedr.getVideos();
 // An object containing list of all files and folders
 ```
@@ -29,13 +29,17 @@ There are two ways to login, that is,
 the username and password method returns a token with short lifetime while device id method returns a 2 year lifetime token.
 
 ```js
-var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.login("email@example.com","password");
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
 ```
 
 ![Seedr.cc Devices](https://user-images.githubusercontent.com/17960677/97114270-95359180-1715-11eb-91f1-59273a488ca5.png)
 
 ```js
-var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.getDeviceCode();
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.getDeviceCode();
 // prints a device code and user code, go to seedr.cc/devices and add user code
 // after adding user code, pass the device code parameter to getToken function
 
@@ -46,7 +50,9 @@ await seedr.getToken("device_code");
 ** using an old token to log in directly **
 
 ```js
-var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.addToken("token");
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.addToken("token");
 ```
 ### Adding magnet link
 
@@ -95,7 +101,8 @@ To delete Folders use `deleteFolder` function and to delete files, use `deleteFi
 
 ```js
 var Seedr = require("seedr");
-var seedr = new Seedr();                                      await seedr.login("email@example.com","password");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
 
 await s.deleteFile("file_id");
 
