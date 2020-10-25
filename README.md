@@ -1,5 +1,8 @@
 # Seedr.cc API
-![seedr.cc](https://user-images.githubusercontent.com/17960677/97034774-0b55bf00-1583-11eb-9529-807646a216de.png)
+![seedr.cc](https://user-images.githubusercontent.com/17960677/97034774-0b55bf00-1583-11eb-9529-807646a216de.png)  
+  
+    
+
 Unofficial API wrapper for seedr.cc
 ## Example
 The Following Code snipet will help you understand how to use this.
@@ -8,10 +11,95 @@ The Following Code snipet will help you understand how to use this.
 var Seedr = require("seedr");
 var seedr = new Seedr();
 await seedr.login("email@example.com","password");
-await seedr.add("magnet_link");
+await seedr.addMagnet("magnet_link");
 // Starts doenloading, wait till that happens
-var contents = await seedr.get();
+var contents = await seedr.getVideos();
 // An object containing list of all files and folders
+```
+
+## Documentation
+
+### Logging in
+
+There are two ways to login, that is,
+
+* using username and password
+* using device code
+
+the username and password method returns a token with short lifetime while device id method returns a 2 year lifetime token.
+
+```js
+var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.login("email@example.com","password");
+```
+
+![Seedr.cc Devices](https://user-images.githubusercontent.com/17960677/97114270-95359180-1715-11eb-91f1-59273a488ca5.png)
+
+```js
+var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.getDeviceCode();
+// prints a device code and user code, go to seedr.cc/devices and add user code
+// after adding user code, pass the device code parameter to getToken function
+
+await seedr.getToken("device_code");
+// returns a token with 1 year lifetime
+```
+
+** using an old token to log in directly **
+
+```js
+var Seedr = require("seedr");                                 var seedr = new Seedr();                                      await seedr.addToken("token");
+```
+### Adding magnet link
+
+Magnet link can be added using `addMagnet` function
+
+```js
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
+
+await s.addMagnet("magnet_link");
+
+// adds a magnet link, wait till it downloads
+```
+
+### Getting contents
+
+To get contents (only videos), use the `getVideos` function
+
+```js
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
+
+await s.getVideos();
+
+/*
+Prints Array of Arrays with file data
+
+[
+  [
+    {
+      "fid": 124291671, // folder id
+      "id": 636235280, // file id
+      "name": "File Name"
+    },
+    ...
+  ],
+  ...
+]
+*/
+```
+### Deleting contents
+
+To delete Folders use `deleteFolder` function and to delete files, use `deleteFiles` function
+
+```js
+var Seedr = require("seedr");
+var seedr = new Seedr();                                      await seedr.login("email@example.com","password");
+
+await s.deleteFile("file_id");
+
+await s.deleteFolder("folder_id");
 ```
 
 ## Contributing
