@@ -38,6 +38,10 @@ module.exports = class Seedr {
     return this.token;
   }
 
+  async addToken(token) {
+    this.token = token;
+  }
+
   async addMagnet(magnet) {
   	var data = new FormData();
 	data.append('access_token', this.token);
@@ -52,6 +56,20 @@ module.exports = class Seedr {
 	});
 	return res;
   }
+
+  async getVideos() {
+    var res = [];
+
+    var data = await axios("https://www.seedr.cc/api/folder?access_token="+this.token);
+
+    for (folder of data.data.folders) {
+      res.push((await axios("https://www.seedr.cc/api/folder/"+folder.id+"?access_token="+this.token)).data.files.filter(x=>x["play_video"]).map(x=>{return {id: x["folder_file_id"],name: x.name}}))
+    }
+
+    return res;
+  }
+
+  
 }
 
 
