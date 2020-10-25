@@ -83,7 +83,7 @@ module.exports = class Seedr {
 
   async deleteFolder(id) {
     var data = new FormData();
-    data.append('access_token', thid.token);
+    data.append('access_token', this.token);
     data.append('func', 'delete');
     data.append('delete_arr', JSON.stringify([{type: 'folder',id: id}]));
 
@@ -97,7 +97,7 @@ module.exports = class Seedr {
   }
 
   async deleteFile(id) {                                          var data = new FormData();
-    data.append('access_token', thid.token);                      data.append('func', 'delete');                                data.append('delete_arr', JSON.stringify([{type: 'file',id: id}]));
+    data.append('access_token', this.token);                      data.append('func', 'delete');                                data.append('delete_arr', JSON.stringify([{type: 'file',id: id}]));
 
     var res = await axios({
         method: 'post',
