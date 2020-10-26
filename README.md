@@ -26,7 +26,7 @@ There are two ways to login, that is,
 * using username and password
 * using device code
 
-the username and password method returns a token with short lifetime while device id method returns a 2 year lifetime token.
+the username and password method returns a token with short lifetime while device id method returns a 1 year lifetime token.
 
 ```js
 var Seedr = require("seedr");
@@ -63,7 +63,7 @@ var Seedr = require("seedr");
 var seedr = new Seedr();
 await seedr.login("email@example.com","password");
 
-await s.addMagnet("magnet_link");
+await seedr.addMagnet("magnet_link");
 
 // adds a magnet link, wait till it downloads
 ```
@@ -77,7 +77,7 @@ var Seedr = require("seedr");
 var seedr = new Seedr();
 await seedr.login("email@example.com","password");
 
-await s.getVideos();
+await seedr.getVideos();
 
 /*
 Prints Array of Arrays with file data
@@ -104,9 +104,9 @@ var Seedr = require("seedr");
 var seedr = new Seedr();
 await seedr.login("email@example.com","password");
 
-await s.deleteFile("file_id");
+await seedr.deleteFile("file_id");
 
-await s.deleteFolder("folder_id");
+await seedr.deleteFolder("folder_id");
 ```
 
 ## Contributing
