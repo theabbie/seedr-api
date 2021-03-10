@@ -28,7 +28,7 @@ module.exports = class Seedr {
     var dc = await axios("https://www.seedr.cc/api/device/code?client_id=seedr_xbmc");
     this.devc = dc.data["device_code"];
     this.usc = dc.data["user_code"];
-    console.log(this.usc, this.devc);
+    console.log(`Paste this code into Seedr ${this.usc} || And here is your token ${this.devc}`);
     return this.usc;
   }
 
