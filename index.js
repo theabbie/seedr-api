@@ -75,6 +75,46 @@ module.exports = class Seedr {
     return res;
   }
 
+  async getFilesById(id = null) {
+    var res = [];
+
+    if (id) {
+        var data = await axios("https://www.seedr.cc/api/folder/" + id + "?access_token=" + this.token);
+
+        for (var folder of data.data.folders) {
+            res.push({
+                fid: folder.id,
+                type: 'folder',
+                name: folder.name
+            })}
+        for (var file of data.data.files) {
+            res.push({
+                fid: id,
+                id: file.folder_file_id,
+                type: 'file',
+                name: file.name
+            })}
+
+    } else {
+        var data = await axios("https://www.seedr.cc/api/folder?access_token=" + this.token);
+
+        for (var folder of data.data.folders) {
+            res.push({
+                fid: folder.id,
+                type: 'folder',
+                name: folder.name
+            })}
+        for (var file of data.data.files) {
+            res.push({
+                fid: null,
+                id: file.folder_file_id,
+                type: 'file',
+                name: file.name
+            })}
+    }
+    return res;
+  }
+
   async getFile(id) {
     var data = new FormData();
     data.append('access_token', this.token);
