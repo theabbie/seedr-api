@@ -111,6 +111,7 @@ module.exports = class Seedr {
         })
         if (file.size) {res.folderSize += parseInt(file.size)}
     }
+
     return res;
   }
 
