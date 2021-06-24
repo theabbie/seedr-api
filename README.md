@@ -1,7 +1,7 @@
 # Seedr.cc API
 ![seedr.cc](https://user-images.githubusercontent.com/17960677/97034774-0b55bf00-1583-11eb-9529-807646a216de.png)  
   
-    
+
 
 Unofficial API wrapper for seedr.cc
 ## Example
@@ -95,6 +95,57 @@ Prints Array of Arrays with file data
 ]
 */
 ```
+
+### Getting contents in a specific folder
+To get contents (all videos, files, etc in folder), use the `getFilesById` function
+
+```js
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
+
+await seedr.getFilesById();
+
+/*
+Prints Array of Arrays with file data
+
+
+{
+   parentId: 167483733,
+   name: 'Superman.and.Lois.S01E11.1080p.AMZN.WEBRip.DDP5.1.x264-NTb[rartv]',
+   folderSize: 129,
+   totalStorage: 2147483648,
+   usedStorage: 720392889,
+   type: 'folder',
+   files: [
+     { id: 943600241,
+       type: 'file',
+       name: 'Newname',
+       size: 30
+     },
+     {
+       id: 943600242,
+       type: 'file',
+       name: 'RARBG_DO_NOT_MIRROR.exe',
+       size: 99
+     },
+     ...
+   ]
+}
+
+*/
+```
+
+### Renaming files
+You can change the file name using this method
+```js
+var Seedr = require("seedr");
+var seedr = new Seedr();
+await seedr.login("email@example.com","password");
+
+await seedr.rename("file_id", "newName");
+```
+
 ### Deleting contents
 
 To delete Folders use `deleteFolder` function and to delete files, use `deleteFiles` function
