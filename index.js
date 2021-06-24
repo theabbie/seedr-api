@@ -76,41 +76,40 @@ module.exports = class Seedr {
   }
 
   async getFilesById(id = null) {
-    var res = [];
-
+    // getting the required url and requesting json data
     if (id) {
-        var data = await axios("https://www.seedr.cc/api/folder/" + id + "?access_token=" + this.token);
-
-        for (var folder of data.data.folders) {
-            res.push({
-                fid: folder.id,
-                type: 'folder',
-                name: folder.name
-            })}
-        for (var file of data.data.files) {
-            res.push({
-                fid: id,
-                id: file.folder_file_id,
-                type: 'file',
-                name: file.name
-            })}
-
+         url = `https://www.seedr.cc/api/folder/${id}?access_token=${this.token}`
     } else {
-        var data = await axios("https://www.seedr.cc/api/folder?access_token=" + this.token);
+        var url = `https://www.seedr.cc/api/folder?access_token=${this.token}`
+    }
+    var data = await axios(url);
 
-        for (var folder of data.data.folders) {
-            res.push({
-                fid: folder.id,
-                type: 'folder',
-                name: folder.name
-            })}
-        for (var file of data.data.files) {
-            res.push({
-                fid: null,
-                id: file.folder_file_id,
-                type: 'file',
-                name: file.name
-            })}
+    // getting the parents if available else returning null
+    let parent
+    if (data.data.parent != -1) {
+        parent = data.data.parent
+    } else {
+        parent = null
+    }
+
+    var res = {parentId: parent, name: data.data.name, folderSize: 0, totalStorage: data.data.space_max, usedStorage: data.data.space_used, type: data.data.type, files: []};
+    for (var folder of data.data.folders) {
+        res.files.push({
+            id: folder.id,
+            type: 'folder',
+            name: folder.name, 
+            size: folder.size
+        })
+        if (folder.size) {res.folderSize += parseInt(folder.size)}
+    }
+    for (var file of data.data.files) {
+        res.files.push({
+            id: file.folder_file_id,
+            type: 'file',
+            name: file.name,
+            size: file.size
+        })
+        if (file.size) {res.folderSize += parseInt(file.size)}
     }
     return res;
   }
