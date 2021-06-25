@@ -92,7 +92,7 @@ module.exports = class Seedr {
         parent = null
     }
 
-    var res = {parentId: parent, name: data.data.name, folderSize: 0, totalStorage: data.data.space_max, usedStorage: data.data.space_used, type: data.data.type, files: []};
+    var res = {parentId: parent, name: data.data.name, folderSize: 0, totalStorage: data.data.space_max, usedStorage: data.data.space_used, type: data.data.type, files: [], activeTorrents: data.data.torrents};
     for (var folder of data.data.folders) {
         res.files.push({
             id: folder.id,
