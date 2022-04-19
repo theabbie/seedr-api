@@ -76,7 +76,6 @@ module.exports = class Seedr {
   }
   async getAll() {
     var res = [];
-
     var data = await axios("https://www.seedr.cc/api/folder?access_token=" + this.token);
 
     for (var folder of data.data.folders) {
