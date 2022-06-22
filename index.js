@@ -74,6 +74,22 @@ module.exports = class Seedr {
 
     return res;
   }
+  async getAll() {
+    var res = [];
+    var data = await axios("https://www.seedr.cc/api/folder?access_token=" + this.token);
+
+    for (var folder of data.data.folders) {
+      res.push((await axios("https://www.seedr.cc/api/folder/" + folder.id + "?access_token=" + this.token)).data.files.filter(x => x).map(x => {
+        return {
+          fid: folder.id,
+          id: x["folder_file_id"],
+          name: x.name
+        }
+      }));
+    }
+
+    return res;
+  }
 
   async getFile(id) {
     var data = new FormData();
