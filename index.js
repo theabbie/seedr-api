@@ -75,11 +75,67 @@ module.exports = class Seedr {
     return res;
   }
 
+  async getFilesById(id = null) {
+    // getting the required url and requesting json data
+    if (id) {
+        var url = `https://www.seedr.cc/api/folder/${id}?access_token=${this.token}`
+    } else {
+        var url = `https://www.seedr.cc/api/folder?access_token=${this.token}`
+    }
+    var data = await axios(url);
+
+    // getting the parents if available else returning null
+    let parent
+    if (data.data.parent != -1) {
+        parent = data.data.parent
+    } else {
+        parent = null
+    }
+
+    var res = {parentId: parent, name: data.data.name, folderSize: 0, totalStorage: data.data.space_max, usedStorage: data.data.space_used, type: data.data.type, files: [], activeTorrents: data.data.torrents};
+    for (var folder of data.data.folders) {
+        res.files.push({
+            id: folder.id,
+            type: 'folder',
+            name: folder.name, 
+            size: folder.size
+        })
+        if (folder.size) {res.folderSize += parseInt(folder.size)}
+    }
+    for (var file of data.data.files) {
+        res.files.push({
+            id: file.folder_file_id,
+            type: 'file',
+            name: file.name,
+            size: file.size
+        })
+        if (file.size) {res.folderSize += parseInt(file.size)}
+    }
+
+    return res;
+  }
+
   async getFile(id) {
     var data = new FormData();
     data.append('access_token', this.token);
     data.append('func', 'fetch_file');
     data.append('folder_file_id', id);
+
+    var res = await axios({
+      method: 'post',
+      url: 'https://www.seedr.cc/oauth_test/resource.php',
+      headers: data.getHeaders(),
+      data: data
+    });
+    return res.data;
+  }
+
+  async rename(id, newName) {
+    var data = new FormData();
+    data.append('access_token', this.token);
+    data.append('func', 'rename');
+    data.append('rename_to', newName)
+    data.append('file_id', id);
 
     var res = await axios({
       method: 'post',
